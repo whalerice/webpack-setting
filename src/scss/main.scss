@@ -1,0 +1,24 @@
+@import 'variable';
+
+html {
+	font-family: 'Apple SD Gothic Neo', Roboto, 'Noto Sans KR', NanumGothic,
+		'Malgun Gothic', sans-serif;
+	line-height: 1.2;
+	word-wrap: break-word;
+}
+
+body {
+	// background: tomato;
+	background: $bg;
+
+	h1 {
+		color: #fff;
+	}
+}
+
+.box {
+	width: 500px;
+	height: 300px;
+	background: yellow url('../images/s.jpg') 0 0 no-repeat;
+	background-size: contain;
+}
