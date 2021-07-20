@@ -7,9 +7,14 @@ module.exports = {
 	entry: './src/js/main.js',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		// filename: './js/bundle.[contenthash].js',
 		filename: 'js/bundle.min.js',
 		clean: true,
+	},
+	devServer: {
+		host: 'localhost',
+		open: true,
+		port: 3000,
+		overlay: true, // 빌드시 에러나 경고를 브라우져 화면에 표시한다.
 	},
 	module: {
 		rules: [
@@ -33,13 +38,8 @@ module.exports = {
 			patterns: [{ from: 'src/images', to: 'images' }],
 		}),
 		new MiniCssExtractPlugin({
-			// filename: './css/[name].[contenthash].css',
-			// chunkFilename: './css/[id].[contenthash].css',
 			filename: 'css/[name].min.css',
 			chunkFilename: 'css/[id].min.css',
 		}),
 	],
-	devServer: {
-		host: 'localhost',
-	},
 };
