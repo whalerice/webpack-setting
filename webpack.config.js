@@ -5,16 +5,13 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
 module.exports = (env, argv) => {
-	// console.log(argv)
 	const isDev = argv.mode === 'development' ? true : false;
-
-	console.log(isDev)
 
 	return {
 		entry: './src/js/main.js',
 		output: {
 			path: path.resolve(__dirname, 'dist'),
-			filename: 'js/bundle.min.js',
+			filename: isDev ? 'js/[name].js' : 'js/bundle.min.js',
 			clean: true,
 		},
 		devServer: {
@@ -30,7 +27,7 @@ module.exports = (env, argv) => {
 				{
 					test: /\.(sa|sc|c)ss$/i,
 					use: [
-						isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+						MiniCssExtractPlugin.loader,
 						'css-loader', 'sass-loader'],
 				},
 			],
@@ -38,21 +35,21 @@ module.exports = (env, argv) => {
 		plugins: [
 			new HtmlPlugin({
 				minify: {
-					collapseWhitespace: true,
+					collapseWhitespace: isDev ? false : true,
 				},
-				hash: true,
+				hash: isDev ? false : true,
 				template: './src/index.html',
 			}),
 			new CopyWebpackPlugin({
-				patterns: [{ from: 'src/images', to: 'images' }],
+				patterns: [
+					{ from: 'src/images', to: 'images' }
+				],
 			}),
 			new MiniCssExtractPlugin({
-				filename: 'css/[name].min.css',
-				chunkFilename: 'css/[id].min.css',
+				filename: isDev ? 'css/[name].css' : 'css/bundle.min.css',
+				chunkFilename: isDev ? 'css/[id].css' : 'css/[id].min.css',
 			}),
-			new CleanWebpackPlugin({
-				cleanAfterEveryBuildPatterns: ['dist']
-			})
+			isDev ? new CleanWebpackPlugin({cleanAfterEveryBuildPatterns: ['dist']}) : null,
 		]
 	};
 }
