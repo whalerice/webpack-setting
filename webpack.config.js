@@ -49,7 +49,9 @@ module.exports = (env, argv) => {
 				filename: isDev ? 'css/[name].css' : 'css/bundle.min.css',
 				chunkFilename: isDev ? 'css/[id].css' : 'css/[id].min.css',
 			}),
-			isDev ? new CleanWebpackPlugin({cleanAfterEveryBuildPatterns: ['dist']}) : null,
+			new CleanWebpackPlugin(
+				{cleanAfterEveryBuildPatterns: ['dist']}
+			),
 		]
 	};
 }
