@@ -28,12 +28,20 @@ module.exports = (env, argv) => {
 					test: /\.(sa|sc|c)ss$/i,
 					use: [
 						MiniCssExtractPlugin.loader,
-						'css-loader', 'sass-loader'
+						// 'css-loader',
+						{
+							loader: "css-loader",
+							options: { url: false, sourceMap: false }
+						},
+						'sass-loader'
 					],
 				},
 			],
 		},
 		plugins: [
+			new CleanWebpackPlugin({
+				cleanAfterEveryBuildPatterns: ['build']
+			}),
 			new HtmlPlugin({
 				minify: {
 					collapseWhitespace: isDev ? false : true,
@@ -43,16 +51,14 @@ module.exports = (env, argv) => {
 			}),
 			new CopyWebpackPlugin({
 				patterns: [
-					{ from: 'src/images', to: 'images' }
+					{ from: 'src/images', to: 'images' },
+					{ from: 'src/font', to: 'font' }
 				],
 			}),
 			new MiniCssExtractPlugin({
 				filename: isDev ? 'css/[name].css' : 'css/bundle.min.css',
 				chunkFilename: isDev ? 'css/[id].css' : 'css/[id].min.css',
 			}),
-			new CleanWebpackPlugin(
-				{cleanAfterEveryBuildPatterns: ['build']}
-			),
 		]
 	};
 }
