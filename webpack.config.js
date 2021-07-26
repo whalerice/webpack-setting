@@ -10,14 +10,14 @@ module.exports = (env, argv) => {
 	return {
 		entry: './src/js/main.js',
 		output: {
-			path: path.resolve(__dirname, 'dist'),
+			path: path.resolve(__dirname, 'build'),
 			filename: isDev ? 'js/[name].js' : 'js/bundle.min.js',
 			clean: true,
 		},
 		devServer: {
 			host: 'localhost',
 			open: true,
-			port: 3000,
+			port: 3300,
 			//overlay: true, // 빌드시 에러나 경고를 브라우져 화면에 표시한다.
 		},
 		module: {
@@ -51,7 +51,7 @@ module.exports = (env, argv) => {
 				chunkFilename: isDev ? 'css/[id].css' : 'css/[id].min.css',
 			}),
 			new CleanWebpackPlugin(
-				{cleanAfterEveryBuildPatterns: ['dist']}
+				{cleanAfterEveryBuildPatterns: ['build']}
 			),
 		]
 	};
